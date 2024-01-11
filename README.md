@@ -1,5 +1,5 @@
 This is a skeleton of Spring Boot application which should be used as a start point to create a working one.
-The goal of this task is to create simple web application which allows users to create TODOs via REST API.
+The goal of this task is to create simple web application which allows users to create TODOs. In addition, the application should expose public REST API in order to allow to manipulate data programmatically.
 
 Below you may find a proposition of the DB model:
 
