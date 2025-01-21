@@ -9,5 +9,4 @@ Below you may find a proposition of the DB model:
 
 ![DB model](DBModel.png)
 
-To complete the exercise please implement all missing classes and functionalities in order to be able to store and retrieve information about tasks and their categories.
-Once you are ready, please send it to me (ie link to your git repository) before  our interview.
+Once you are ready, please send me **link to your git repository** which contains complete solution
