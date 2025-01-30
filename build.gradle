@@ -1,17 +1,36 @@
 plugins {
 	id 'org.springframework.boot' version '3.4.1'
 	id 'io.spring.dependency-management' version '1.1.7'
+	id "org.openapi.generator" version "7.11.0"
 	id 'java'
 }
 
 group = 'ch.cern'
 version = '1.0.0-SNAPSHOT'
+java.toolchain.languageVersion = JavaLanguageVersion.of(21)
 
-java {
-	toolchain {
-		languageVersion = JavaLanguageVersion.of(21)
+openApiGenerate {
+	generatorName.set("spring")
+	inputSpec.set("$rootDir/src/main/resources/swagger.yml")
+	outputDir.set("$buildDir/generated")
+	apiPackage.set("$group" + ".todo.openapi.api")
+	invokerPackage.set("$group" + ".todo.openapi.invoker")
+	modelPackage.set("$group" + ".todo.openapi.model")
+	configOptions = [
+			interfaceOnly: "true",
+			useSpringBoot3: "true"
+	]
+}
+
+compileJava.dependsOn "openApiGenerate"
+
+
+sourceSets {
+	main {
+		java.srcDirs = ['src/main/java', 'build/generated/src/main/java']
 	}
 }
+
 
 repositories {
 	mavenCentral()
@@ -21,10 +40,16 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	implementation 'org.springframework.boot:spring-boot-starter-security'
+	implementation 'org.springframework.boot:spring-boot-starter-validation'
 	implementation 'org.projectlombok:lombok'
+	implementation 'org.openapitools:jackson-databind-nullable:0.2.6'
+	implementation 'org.openapitools:openapi-generator-gradle-plugin:7.11.0'
+	implementation 'io.swagger.core.v3:swagger-annotations:2.2.21'
 	testImplementation 'org.springframework.security:spring-security-test'
-	runtimeOnly 'com.h2database:h2'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	runtimeOnly 'com.h2database:h2'
+	compileOnly 'javax.servlet:javax.servlet-api:4.0.1'
+
 }
 
 tasks.named('test') {
