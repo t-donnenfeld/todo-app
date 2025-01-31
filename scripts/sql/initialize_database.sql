@@ -1,6 +1,6 @@
 CREATE TABLE categories
 (
-    id INT NOT NULL,
+    id INT NOT NULL AUTO_INCREMENT,
     category_name VARCHAR(100) NOT NULL,
     category_description VARCHAR(500),
     PRIMARY KEY(id)
@@ -8,7 +8,7 @@ CREATE TABLE categories
 
 CREATE TABLE users
 (
-    id INT NOT NULL,
+    id INT NOT NULL AUTO_INCREMENT,
     user_username VARCHAR(100) NOT NULL,
     user_password VARCHAR(100) NOT NULL,
     user_role VARCHAR(10) NOT NULL,
@@ -17,7 +17,7 @@ CREATE TABLE users
 
 CREATE TABLE todos
 (
-    id INT PRIMARY KEY NOT NULL,
+    id INT NOT NULL AUTO_INCREMENT,
     todo_name VARCHAR(100) NOT NULL,
     todo_description VARCHAR(500),
     todo_deadline DATETIME,
