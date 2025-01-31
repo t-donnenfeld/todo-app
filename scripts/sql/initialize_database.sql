@@ -10,11 +10,8 @@ CREATE TABLE users
 (
     id INT NOT NULL,
     user_username VARCHAR(100) NOT NULL,
-    user_firstname VARCHAR(100) NOT NULL,
-    user_lastname VARCHAR(100) NOT NULL,
-    user_email VARCHAR(100) NOT NULL,
     user_password VARCHAR(100) NOT NULL,
-    user_isadmin BIT NOT NULL,
+    user_role VARCHAR(10) NOT NULL,
     PRIMARY KEY(id)
 );
 

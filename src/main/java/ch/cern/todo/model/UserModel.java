@@ -18,19 +18,11 @@ public class UserModel {
     @Column(name = "user_username")
     private String username;
 
-    @Column(name = "user_firstname")
-    private String firstname;
-
-    @Column(name = "user_lastname")
-    private String lastname;
-
-    @Column(name = "user_email")
-    private String email;
-
     @Column(name = "user_password")
     private String password;
 
-    @Column(name = "user_isadmin")
-    private boolean isAdmin;
+    @Column(name = "user_role")
+    @Enumerated(EnumType.STRING)
+    private RoleEnum role;
 
 }
