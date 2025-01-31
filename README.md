@@ -1,4 +1,6 @@
-# Initial Problem
+# Todo App - Notes
+
+## Initial Problem
 
 This is a skeleton of Spring Boot application which should be used as a start point to create a working one.
 The goal of this task is to create simple REST API  which allows users to manage TODOs. 
@@ -13,6 +15,12 @@ Below you may find a proposition of the DB model:
 
 Once you are ready, please send me **link to your git repository** which contains complete solution
 
-# Proposition
+## Proposition
 
 - For the sake of simplicity users are authenticated with Basic Auth on this application.
+- We do not handle Timezones
+
+### Issues encountered
+
+- Gradle management of java modules : cleanly adding generated sources
+- Conflict of slf4j implementation : `org.openapitools:openapi-generator` transitively imported `slf4j.simple` which implements SLF4JServiceProvider and collided with default spring-boot-starter-logging SLF4JServiceProvider

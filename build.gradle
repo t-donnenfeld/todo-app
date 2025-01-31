@@ -41,15 +41,23 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	implementation 'org.springframework.boot:spring-boot-starter-security'
 	implementation 'org.springframework.boot:spring-boot-starter-validation'
-	implementation 'org.projectlombok:lombok'
 	implementation 'org.openapitools:jackson-databind-nullable:0.2.6'
 	implementation 'org.openapitools:openapi-generator-gradle-plugin:7.11.0'
 	implementation 'io.swagger.core.v3:swagger-annotations:2.2.21'
-	testImplementation 'org.springframework.security:spring-security-test'
-	testImplementation 'org.springframework.boot:spring-boot-starter-test'
-	runtimeOnly 'com.h2database:h2'
-	compileOnly 'javax.servlet:javax.servlet-api:4.0.1'
+	implementation 'javax.servlet:javax.servlet-api:4.0.1'
 
+	runtimeOnly 'com.h2database:h2'
+	compileOnly 'org.projectlombok:lombok:1.18.36'
+
+	annotationProcessor 'org.projectlombok:lombok:1.18.36'
+
+	testCompileOnly 'org.projectlombok:lombok:1.18.36'
+	testAnnotationProcessor 'org.projectlombok:lombok:1.18.36'
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+}
+
+configurations.configureEach {
+	exclude group: 'org.slf4j', module: 'slf4j-simple'
 }
 
 tasks.named('test') {
