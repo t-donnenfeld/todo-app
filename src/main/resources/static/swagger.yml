@@ -33,8 +33,16 @@ paths:
                   $ref: '#/components/schemas/Todo'
         '400':
           description: Invalid ID supplied
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
         '404':
           description: Todo not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
     post:
       tags:
         - todo
@@ -52,8 +60,16 @@ paths:
                 $ref: '#/components/schemas/Todo'
         '400':
           description: Invalid input
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
         '422':
           description: Validation exception
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
   /todo/{todoId}:
     get:
       tags:
@@ -78,8 +94,16 @@ paths:
                 $ref: '#/components/schemas/Todo'
         '400':
           description: Invalid ID supplied
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
         '404':
           description: Todo not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
     put:
       tags:
         - todo
@@ -110,10 +134,22 @@ paths:
                 $ref: '#/components/schemas/Todo'
         '400':
           description: Invalid ID supplied
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
         '404':
           description: Todo not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
         '422':
           description: Validation exception
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
     delete:
       tags:
         - todo
@@ -131,6 +167,10 @@ paths:
       responses:
         '400':
           description: Invalid todo value
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
   /todo/search:
     post:
       tags:
@@ -151,6 +191,10 @@ paths:
                   $ref: '#/components/schemas/Todo'
         '400':
           description: Invalid status value
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
   /category:
     get:
       tags:
@@ -169,8 +213,16 @@ paths:
                   $ref: '#/components/schemas/Category'
         '400':
           description: Invalid ID supplied
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
         '404':
           description: Category not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
     post:
       tags:
         - categories
@@ -193,8 +245,16 @@ paths:
                 $ref: '#/components/schemas/Category'
         '400':
           description: Invalid input
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
         '422':
           description: Validation exception
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
   /category/{categoryId}:
     get:
       tags:
@@ -219,8 +279,16 @@ paths:
                 $ref: '#/components/schemas/Category'
         '400':
           description: Invalid ID supplied
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
         '404':
           description: Category not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
     put:
       tags:
         - categories
@@ -251,10 +319,22 @@ paths:
                 $ref: '#/components/schemas/Category'
         '400':
           description: Invalid ID supplied
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
         '404':
           description: Category not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
         '422':
           description: Validation exception
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
     delete:
       tags:
         - categories
@@ -272,7 +352,11 @@ paths:
       responses:
         '400':
           description: Invalid category value
-  /user:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /user/register:
     post:
       tags:
         - user
@@ -282,19 +366,25 @@ paths:
       requestBody:
         $ref: '#/components/requestBodies/PostUserRequest'
       responses:
-        default:
+        '200':
           description: successful operation
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/User'
+        '422':
+          description: Validation exception
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
 components:
   schemas:
     Todo:
+      type: object
       required:
         - name
-        - description
-      type: object
       properties:
         id:
           type: integer
@@ -314,6 +404,8 @@ components:
           $ref: '#/components/schemas/Category'
     Category:
       type: object
+      required:
+        - name
       properties:
         id:
           type: integer
@@ -327,6 +419,9 @@ components:
           example: "Regroups all domestic work related tasks"
     User:
       type: object
+      required:
+        - username
+        - role
       properties:
         id:
           type: integer
@@ -335,20 +430,22 @@ components:
         username:
           type: string
           example: tdonnenfeld
-        firstName:
+        role:
           type: string
-          example: Theotime
-        lastName:
+          enum:
+            - "ADMIN"
+            - "USER"
+    Error:
+      type: object
+      properties:
+        message:
           type: string
-          example: Donnenfeld
-        email:
+        code:
           type: string
-          example: tdonnenfeld@gmail.com
-        password:
-          type: string
-          example: '12345'
-        isAdmin:
-          type: boolean
+          enum:
+            - "DEFAULT_ERROR"
+            - "RESOURCE_NOT_FOUND_ERROR"
+            - "VALIDATION_ERROR"
   requestBodies:
     PostTodoRequest:
       description: Todo object that needs to be added
@@ -392,15 +489,6 @@ components:
               username:
                 type: string
                 example: tdonnenfeld
-              firstName:
-                type: string
-                example: Theotime
-              lastName:
-                type: string
-                example: Donnenfeld
-              email:
-                type: string
-                example: tdonnenfeld@gmail.com
               password:
                 type: string
                 example: '12345'
