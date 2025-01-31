@@ -11,7 +11,7 @@ tags:
   - name: todo
     description: Operations about todos
   - name: categories
-    description: Operations about todos
+    description: Operations about categories
   - name: user
     description: Operations about users
 paths:
@@ -121,12 +121,6 @@ paths:
       description: delete a todo
       operationId: deleteTodo
       parameters:
-        - name: api_key
-          in: header
-          description: ''
-          required: false
-          schema:
-            type: string
         - name: todoId
           in: path
           description: Todo id to delete
@@ -268,12 +262,6 @@ paths:
       description: delete a category
       operationId: deleteCategory
       parameters:
-        - name: api_key
-          in: header
-          description: ''
-          required: false
-          schema:
-            type: string
         - name: categoryId
           in: path
           description: Category id to delete
@@ -322,10 +310,8 @@ components:
           type: string
           format: date-time
           example: "2025-02-04T23:59:59.00Z"
-        categories:
-          type: array
-          items:
-            $ref: '#/components/schemas/Category'
+        category:
+          $ref: '#/components/schemas/Category'
     Category:
       type: object
       properties:
