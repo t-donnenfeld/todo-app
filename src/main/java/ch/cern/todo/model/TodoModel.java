@@ -5,7 +5,6 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
-import java.time.OffsetDateTime;
 
 @Entity
 @Table(name = "todos")
@@ -30,9 +29,5 @@ public class TodoModel {
     @ManyToOne
     @JoinColumn(name = "category_id")
     private CategoryModel categoryId;
-
-
-    public TodoModel() {
-    }
 
 }

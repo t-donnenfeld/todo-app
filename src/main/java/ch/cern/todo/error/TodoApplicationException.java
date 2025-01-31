@@ -3,26 +3,24 @@ package ch.cern.todo.error;
 import ch.cern.todo.openapi.model.Error;
 import lombok.Getter;
 import lombok.Setter;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 
 @Getter
 @Setter
 public abstract class TodoApplicationException extends RuntimeException {
 
-    private Error.CodeEnum errorcode = Error.CodeEnum.DEFAULT_ERROR;
-    private HttpStatusCode httpStatusCode = HttpStatus.INTERNAL_SERVER_ERROR;
+    private final Error.CodeEnum errorcode;
+    private final HttpStatusCode httpStatusCode;
 
-    public TodoApplicationException(String message, Throwable cause) {
+    protected TodoApplicationException(String message, Throwable cause, Error.CodeEnum errorcode, HttpStatusCode httpStatusCode) {
         super(message, cause);
+        this.errorcode = errorcode;
+        this.httpStatusCode = httpStatusCode;
     }
 
-    public TodoApplicationException(String message) {
+    protected TodoApplicationException(String message, Error.CodeEnum errorcode, HttpStatusCode httpStatusCode) {
         super(message);
-    }
-
-    public TodoApplicationException(String message, HttpStatusCode httpStatusCode) {
-        super(message);
+        this.errorcode = errorcode;
         this.httpStatusCode = httpStatusCode;
     }
 

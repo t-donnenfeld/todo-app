@@ -13,7 +13,7 @@ import java.util.Collection;
 @AllArgsConstructor
 public class AuthenticatedUser implements UserDetails {
 
-    private UserModel user;
+    private transient UserModel user;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

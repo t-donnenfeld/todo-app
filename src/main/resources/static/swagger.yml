@@ -446,6 +446,7 @@ components:
             - "DEFAULT_ERROR"
             - "RESOURCE_NOT_FOUND_ERROR"
             - "VALIDATION_ERROR"
+            - "INVALID_USER_OR_PASSWORD"
   requestBodies:
     PostTodoRequest:
       description: Todo object that needs to be added
