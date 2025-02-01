@@ -20,4 +20,5 @@ public class UserController implements UserApi {
         User createdUser = userService.createUser(createUserRequest);
         return new ResponseEntity<>(createdUser, HttpStatus.CREATED);
     }
+
 }

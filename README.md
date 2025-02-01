@@ -17,11 +17,31 @@ Once you are ready, please send me **link to your git repository** which contain
 
 ## Proposition
 
+### Description
+
+This todo-app API implements CRUD operations on Todos,
+Categories and Users as described by the [swagger file](src/main/resources/static/swagger.yml).
+
+Once the application is running, swagger is accessible at path `/swagger-ui/index.html`
+( Default should be `http://localhost:8080/swagger-ui/index.html` )
+
+I followed the architecture : Controller <-> Service <-> Repository <-> Database.
+
+Database was left as initially suggested in an h2 file database ignored from VCS,
+a provisioning script can be found in [test resources ](./src/test/resources/scripts/setup_test_database.sql)
+
+### Get Started
+
+- **Copy** `src/main/resources/application-local.example.yml` to `src/main/resources/application-local.yml` and replace secrets
+- **Windows** : `.\gradlew.bat clean build`
+- **Linux** : `./gradle clean build`
+- ``java -jar -Dspring.profiles.active=local build/libs/tobo-1.0.0-SNAPSHOT.jar``
+
 ### Limitations
 
 - For the sake of simplicity users are authenticated with Basic Auth on this application.
-- Timezones not handled
-- Disabled CSRF
+- Timezones are not handled
+- CSRF checks are Disabled
 - Can only create users with role USER ( no admins )
 
 ### Issues encountered

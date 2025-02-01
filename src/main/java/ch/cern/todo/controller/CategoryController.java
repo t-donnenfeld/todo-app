@@ -1,10 +1,12 @@
 package ch.cern.todo.controller;
 
-import ch.cern.todo.error.NotImplementedException;
 import ch.cern.todo.openapi.api.CategoryApi;
 import ch.cern.todo.openapi.model.AddCategoryRequest;
 import ch.cern.todo.openapi.model.Category;
+import ch.cern.todo.openapi.model.DeletedEntryResponse;
+import ch.cern.todo.service.CategoryService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -14,24 +16,34 @@ import java.util.List;
 @RequiredArgsConstructor
 public class CategoryController implements CategoryApi {
 
+    private final CategoryService categoryService;
+
     @Override
     public ResponseEntity<List<Category>> getAllCategory() {
-        throw new NotImplementedException("getAllCategory is not yet implemented");
+        List<Category> categories = categoryService.findAllCategories();
+        return ResponseEntity.ok(categories);
     }
 
     @Override
     public ResponseEntity<Category> addCategory(AddCategoryRequest addCategoryRequest) {
-        return CategoryApi.super.addCategory(addCategoryRequest);
+        Category createdCategory = categoryService.addCategory(addCategoryRequest);
+        return new ResponseEntity<>(createdCategory, HttpStatus.CREATED);
     }
 
     @Override
     public ResponseEntity<Category> updateCategory(Long categoryId, AddCategoryRequest addCategoryRequest) {
-        return CategoryApi.super.updateCategory(categoryId, addCategoryRequest);
+        Category updatedCategory = categoryService.updateCategory(categoryId, addCategoryRequest);
+        return new ResponseEntity<>(updatedCategory, HttpStatus.NO_CONTENT);
     }
 
     @Override
-    public ResponseEntity<Void> deleteCategory(Long categoryId) {
-        throw new NotImplementedException("deleteCategory is not yet implemented");
+    public ResponseEntity<DeletedEntryResponse> deleteCategory(Long categoryId) {
+        categoryService.deleteCategory(categoryId);
+
+        DeletedEntryResponse deletedEntryResponse = new DeletedEntryResponse();
+        deletedEntryResponse.setMessage("Category with id " + categoryId + " deleted");
+
+        return new ResponseEntity<>(deletedEntryResponse, HttpStatus.OK);
     }
 
 }

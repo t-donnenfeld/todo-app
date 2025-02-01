@@ -4,6 +4,7 @@ package ch.cern.todo.controller;
 import ch.cern.todo.error.NotImplementedException;
 import ch.cern.todo.openapi.api.TodoApi;
 import ch.cern.todo.openapi.model.AddTodoRequest;
+import ch.cern.todo.openapi.model.DeletedEntryResponse;
 import ch.cern.todo.openapi.model.SearchTodosRequest;
 import ch.cern.todo.openapi.model.Todo;
 import lombok.RequiredArgsConstructor;
@@ -15,13 +16,14 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 public class TodoController implements TodoApi {
+
     @Override
     public ResponseEntity<Todo> addTodo(AddTodoRequest addTodoRequest) {
         throw new NotImplementedException("addTodo is not yet implemented");
     }
 
     @Override
-    public ResponseEntity<Void> deleteTodo(Long todoId) {
+    public ResponseEntity<DeletedEntryResponse> deleteTodo(Long todoId) {
         throw new NotImplementedException("deleteTodo is not yet implemented");
     }
 

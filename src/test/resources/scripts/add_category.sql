@@ -1,0 +1,3 @@
+INSERT INTO CATEGORIES (CATEGORY_NAME, CATEGORY_DESCRIPTION)
+VALUES ('category',
+        'category_description');

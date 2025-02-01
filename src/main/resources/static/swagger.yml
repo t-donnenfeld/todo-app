@@ -188,7 +188,7 @@ paths:
               $ref: '#/components/schemas/Todo'
         required: true
       responses:
-        '200':
+        '204':
           description: Successful operation
           content:
             application/json:
@@ -227,6 +227,12 @@ paths:
             type: integer
             format: int64
       responses:
+        '200':
+          description: Entry deleted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeletedEntryResponse'
         '400':
           description: Invalid todo value
           content:
@@ -306,7 +312,7 @@ paths:
       requestBody:
         $ref: '#/components/requestBodies/PostCategoryRequest'
       responses:
-        '200':
+        '204':
           description: Successful operation
           content:
             application/json:
@@ -345,6 +351,12 @@ paths:
             type: integer
             format: int64
       responses:
+        '200':
+          description: Entry deleted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeletedEntryResponse'
         '400':
           description: Invalid category value
           content:
@@ -430,6 +442,11 @@ components:
           enum:
             - "ADMIN"
             - "USER"
+    DeletedEntryResponse:
+      type: object
+      properties:
+        message:
+          type: string
     Error:
       type: object
       properties:
@@ -443,6 +460,7 @@ components:
             - "VALIDATION_ERROR"
             - "INVALID_USER_OR_PASSWORD"
             - "USER_ALREADY_EXISTS"
+            - "RESOURCE_NOT_FOUND"
   requestBodies:
     PostTodoRequest:
       description: Todo object that needs to be added
