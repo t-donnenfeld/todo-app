@@ -475,9 +475,11 @@ components:
             - "RESOURCE_NOT_FOUND_ERROR"
             - "VALIDATION_ERROR"
             - "INVALID_USER_OR_PASSWORD"
+            - "USER_ALREADY_EXISTS"
   requestBodies:
     PostTodoRequest:
       description: Todo object that needs to be added
+      required: true
       content:
         application/json:
           schema:
@@ -504,6 +506,7 @@ components:
                     example: "Chores"
     PostCategoryRequest:
       description: Category object that needs to be added
+      required: true
       content:
         application/json:
           schema:
@@ -519,10 +522,14 @@ components:
                 example: "Regroups all domestic work related tasks"
     PostUserRequest:
       description: User that need to be created
+      required: true
       content:
         application/json:
           schema:
             type: object
+            required:
+              - username
+              - password
             properties:
               username:
                 type: string
@@ -532,6 +539,7 @@ components:
                 example: '12345'
     SearchTodosRequest:
       description: Todo search request object
+      required: true
       content:
         application/json:
           schema:
