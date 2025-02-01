@@ -15,6 +15,11 @@ import java.util.List;
 public class CategoryController implements CategoryApi {
 
     @Override
+    public ResponseEntity<List<Category>> getAllCategory() {
+        throw new NotImplementedException("getAllCategory is not yet implemented");
+    }
+
+    @Override
     public ResponseEntity<Category> addCategory(AddCategoryRequest addCategoryRequest) {
         return CategoryApi.super.addCategory(addCategoryRequest);
     }
@@ -27,16 +32,6 @@ public class CategoryController implements CategoryApi {
     @Override
     public ResponseEntity<Void> deleteCategory(Long categoryId) {
         throw new NotImplementedException("deleteCategory is not yet implemented");
-    }
-
-    @Override
-    public ResponseEntity<List<Category>> getAllCategory() {
-        throw new NotImplementedException("getAllCategory is not yet implemented");
-    }
-
-    @Override
-    public ResponseEntity<Category> getCategoryById(Long categoryId) {
-        throw new NotImplementedException("getCategoryById is not yet implemented");
     }
 
 }

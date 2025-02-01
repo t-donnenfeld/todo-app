@@ -34,12 +34,22 @@ class CategoryControllerTest {
             post("/category").contentType("application/json"),
             delete("/category").contentType("application/json"),
             get("/category").contentType("application/json"),
-            get("/category/123").contentType("application/json"),
             put("/category/123").contentType("application/json")
     };
 
     @Autowired
     private MockMvc mockMvc;
+
+    @SneakyThrows
+    @Test
+    void getAllCategory() {
+        this.mockMvc.perform(get("/category")
+                        .contentType("application/json")
+                        .with(httpBasic(USERNAME, PASSWORD)))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON));
+    }
 
     @ParameterizedTest
     @MethodSource
@@ -75,39 +85,12 @@ class CategoryControllerTest {
                 .andExpect(status().isUnauthorized());
     }
 
-
-    /************************
-     *   DELETE /category
-     */
-
     @SneakyThrows
     @Test
     void deleteCategory() {
         this.mockMvc.perform(delete("/category")
                         .contentType("application/json")
                        .with(httpBasic(USERNAME, PASSWORD)))
-                .andDo(print())
-                .andExpect(status().isOk())
-                .andExpect(content().contentType(MediaType.APPLICATION_JSON));
-    }
-
-    @SneakyThrows
-    @Test
-    void getAllCategory() {
-        this.mockMvc.perform(get("/category")
-                        .contentType("application/json")
-                        .with(httpBasic(USERNAME, PASSWORD)))
-                .andDo(print())
-                .andExpect(status().isOk())
-                .andExpect(content().contentType(MediaType.APPLICATION_JSON));
-    }
-
-    @SneakyThrows
-    @Test
-    void getCategoryById() {
-        this.mockMvc.perform(get("/category/123")
-                        .contentType("application/json")
-                        .with(httpBasic(USERNAME, PASSWORD)))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON));
