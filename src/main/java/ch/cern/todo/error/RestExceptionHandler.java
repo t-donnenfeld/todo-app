@@ -15,7 +15,7 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
     @ExceptionHandler(Exception.class)
     public ResponseEntity<Error> defaultHandler(Exception ex) {
         log.error(ex.getMessage(), ex);
-        DefaultInternalServerError error = new DefaultInternalServerError(ex.getMessage(), ex);
+        DefaultInternalServerException error = new DefaultInternalServerException(ex.getMessage(), ex);
         return new ResponseEntity<>(error.buildError(), HttpStatusCode.valueOf(500));
     }
 
