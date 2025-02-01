@@ -1,0 +1,3 @@
+DROP table CATEGORIES;
+DROP table TODOS;
+DROP table USERS;

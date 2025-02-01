@@ -8,6 +8,7 @@ class TodoApplicationTests {
 
 	@Test
 	void contextLoads() {
+		// Test loading of springboot context
 	}
 
 }
