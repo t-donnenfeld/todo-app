@@ -17,8 +17,11 @@ Once you are ready, please send me **link to your git repository** which contain
 
 ## Proposition
 
+### Choices made for simplicity
+
 - For the sake of simplicity users are authenticated with Basic Auth on this application.
 - We do not handle Timezones
+- Disabled CSRF
 
 ### Issues encountered
 
