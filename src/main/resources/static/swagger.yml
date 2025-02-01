@@ -268,12 +268,7 @@ paths:
       description: Add a new category to the list
       operationId: addCategory
       requestBody:
-        description: Create a new category
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Category'
-        required: true
+        $ref: '#/components/requestBodies/PostCategoryRequest'
       responses:
         '200':
           description: Successful operation
@@ -342,12 +337,7 @@ paths:
             type: integer
             format: int64
       requestBody:
-        description: Update an existent category
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Category'
-        required: true
+        $ref: '#/components/requestBodies/PostCategoryRequest'
       responses:
         '200':
           description: Successful operation
@@ -517,7 +507,16 @@ components:
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/Todo'
+            type: object
+            required:
+              - name
+            properties:
+              name:
+                type: string
+                example: "Chores"
+              description:
+                type: string
+                example: "Regroups all domestic work related tasks"
     PostUserRequest:
       description: User that need to be created
       content:
