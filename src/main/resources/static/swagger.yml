@@ -70,7 +70,7 @@ paths:
         - todo
       summary: Finds todos with a search request
       description: Search parameters are given in request body
-      operationId: findTodos
+      operationId: searchTodos
       requestBody:
         $ref: '#/components/requestBodies/SearchTodosRequest'
       responses:
@@ -116,7 +116,7 @@ paths:
         - todo
       summary: Search todos from authenticated user
       description: Get my todos
-      operationId: getMyTodos
+      operationId: searchMyTodos
       responses:
         '200':
           description: successful operation

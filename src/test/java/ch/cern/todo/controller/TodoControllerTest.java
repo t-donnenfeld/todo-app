@@ -48,17 +48,6 @@ class TodoControllerTest {
 
     @SneakyThrows
     @Test
-    void findTodos() {
-        this.mockMvc.perform(get("/todo")
-                        .contentType("application/json")
-                        .with(httpBasic("user1", "passwd1")))
-                .andDo(print())
-                .andExpect(status().isOk())
-                .andExpect(content().contentType(MediaType.APPLICATION_JSON));
-    }
-
-    @SneakyThrows
-    @Test
     void getAllTodo() {
         this.mockMvc.perform(get("/todo")
                         .contentType("application/json")
@@ -90,4 +79,36 @@ class TodoControllerTest {
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON));
     }
 
+    @SneakyThrows
+    @Test
+    void getMyTodos() {
+        this.mockMvc.perform(get("/todo/mine")
+                        .contentType("application/json")
+                        .with(httpBasic("user1", "passwd1")))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON));
+    }
+
+    @SneakyThrows
+    @Test
+    void searchMyTodos() {
+        this.mockMvc.perform(get("/todo/mine/search")
+                        .contentType("application/json")
+                        .with(httpBasic("user1", "passwd1")))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON));
+    }
+
+    @SneakyThrows
+    @Test
+    void searchTodos() {
+        this.mockMvc.perform(get("/todo/search")
+                        .contentType("application/json")
+                        .with(httpBasic("user1", "passwd1")))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON));
+    }
 }
