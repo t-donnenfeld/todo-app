@@ -14,8 +14,14 @@ public interface CategoryMapper {
     @Mapping(target = "id", source = "id")
     CategoryModel map(AddCategoryRequest category, Long id);
 
+    @Mapping(target = "id", ignore = true)
     CategoryModel map(AddCategoryRequest category);
 
     Category map(CategoryModel categoryModel);
+
+    @Mapping(target = "id", ignore = true)
+    @Mapping(target = "name", source = "name")
+    @Mapping(target = "description", ignore = true)
+    CategoryModel map(String name);
 
 }

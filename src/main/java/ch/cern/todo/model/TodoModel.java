@@ -30,4 +30,8 @@ public class TodoModel {
     @JoinColumn(name = "category_id")
     private CategoryModel categoryId;
 
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private UserModel userId;
+
 }

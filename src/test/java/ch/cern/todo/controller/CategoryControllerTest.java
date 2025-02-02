@@ -23,6 +23,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @Sql(executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD, value = "/scripts/setup_test_database.sql")
+@Sql(executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD, value = "/scripts/add_users.sql")
 @Sql(executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD, value = "/scripts/add_category.sql")
 @Sql(executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD, value = "/scripts/tear_down_database.sql")
 @SpringBootTest
@@ -129,6 +130,5 @@ class CategoryControllerTest {
                 .andExpect(jsonPath("$.message", is("Category with id 12345678 not found")))
                 .andExpect(jsonPath("$.code", is("RESOURCE_NOT_FOUND")));
     }
-
 
 }

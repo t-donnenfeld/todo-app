@@ -2,6 +2,7 @@ package ch.cern.todo.service;
 
 import ch.cern.todo.error.ResourceNotFound;
 import ch.cern.todo.mapper.CategoryMapper;
+import ch.cern.todo.model.CategoryModel;
 import ch.cern.todo.openapi.model.AddCategoryRequest;
 import ch.cern.todo.openapi.model.Category;
 import ch.cern.todo.repository.CategoryRepository;
@@ -25,8 +26,16 @@ public class CategoryService {
         return categoryRepository.findAll().stream().map(categoryMapper::map).toList();
     }
 
+    public CategoryModel findByName(String name) {
+        return categoryRepository.findByName(name);
+    }
+
     public Category addCategory(AddCategoryRequest addCategoryRequest) {
         return categoryMapper.map(categoryRepository.save(categoryMapper.map(addCategoryRequest)));
+    }
+
+    public CategoryModel addCategoryWithName(String name) {
+        return categoryRepository.save(categoryMapper.map(name));
     }
 
     public Category updateCategory(Long id, AddCategoryRequest addCategoryRequest) {

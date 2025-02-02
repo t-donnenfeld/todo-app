@@ -15,7 +15,7 @@ public class CategoryModel {
     @Column(name = "id")
     private Long id;
 
-    @Column(name = "category_name")
+    @Column(unique = true, name = "category_name")
     private String name;
 
     @Column(name = "category_description")

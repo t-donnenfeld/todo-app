@@ -1,59 +1,75 @@
 package ch.cern.todo.controller;
 
 
-import ch.cern.todo.error.NotImplementedException;
 import ch.cern.todo.openapi.api.TodoApi;
-import ch.cern.todo.openapi.model.AddTodoRequest;
-import ch.cern.todo.openapi.model.DeletedEntryResponse;
-import ch.cern.todo.openapi.model.SearchTodosRequest;
-import ch.cern.todo.openapi.model.Todo;
+import ch.cern.todo.openapi.model.*;
+import ch.cern.todo.service.TodoService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
+@PreAuthorize("hasRole('ROLE_USER')")
 public class TodoController implements TodoApi {
 
-    @Override
-    public ResponseEntity<Todo> addTodo(AddTodoRequest addTodoRequest) {
-        throw new NotImplementedException("addTodo is not yet implemented");
-    }
+    private final TodoService todoService;
 
     @Override
-    public ResponseEntity<DeletedEntryResponse> deleteTodo(Long todoId) {
-        throw new NotImplementedException("deleteTodo is not yet implemented");
-    }
-
-    @Override
-    public ResponseEntity<List<Todo>> getMyTodos() {
-        return TodoApi.super.getMyTodos();
-    }
-
-    @Override
-    public ResponseEntity<List<Todo>> searchMyTodos() {
-        return TodoApi.super.searchMyTodos();
-    }
-
-    @Override
-    public ResponseEntity<List<Todo>> searchTodos(SearchTodosRequest searchTodosRequest) {
-        return TodoApi.super.searchTodos(searchTodosRequest);
-    }
-
-    @Override
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<List<Todo>> getAllTodo() {
-        throw new NotImplementedException("getAllTodo is not yet implemented");
+        List<Todo> todos = todoService.findAllTodos();
+        return ResponseEntity.ok(todos);
     }
 
     @Override
     public ResponseEntity<Todo> getTodoById(Long todoId) {
-        throw new NotImplementedException("getTodoById is not yet implemented");
+        Todo todo = todoService.findTodoById(todoId);
+        return ResponseEntity.ok(todo);
     }
 
     @Override
-    public ResponseEntity<Todo> updateTodo(Long todoId, Todo todo) {
-        throw new NotImplementedException("updateTodo is not yet implemented");
+    public ResponseEntity<Todo> addTodo(AddTodoRequest addTodoRequest) {
+        Todo todo = todoService.addTodo(addTodoRequest);
+        return new ResponseEntity<>(todo, HttpStatus.CREATED);
+    }
+
+    @Override
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    public ResponseEntity<List<Todo>> searchTodos(SearchTodosRequest searchTodosRequest) {
+        List<Todo> todos = todoService.searchTodos(searchTodosRequest);
+        return ResponseEntity.ok(todos);
+    }
+
+    @Override
+    public ResponseEntity<List<Todo>> getMyTodos() {
+        List<Todo> todos = todoService.findAllTodosOfAuthenticatedUser();
+        return ResponseEntity.ok(todos);
+    }
+
+    @Override
+    public ResponseEntity<List<Todo>> searchMyTodos(SearchMyTodosRequest searchMyTodosRequest) {
+        List<Todo> todos = todoService.searchTodosOfAuthenticatedUser(searchMyTodosRequest);
+        return ResponseEntity.ok(todos);
+    }
+
+    @Override
+    public ResponseEntity<Todo> updateTodo(Long todoId, AddTodoRequest addTodoRequest) {
+        Todo todo = todoService.updateTodo(todoId, addTodoRequest);
+        return new ResponseEntity<>(todo, HttpStatus.NO_CONTENT);
+    }
+
+    @Override
+    public ResponseEntity<DeletedEntryResponse> deleteTodo(Long todoId) {
+        todoService.deleteTodo(todoId);
+
+        DeletedEntryResponse deletedEntryResponse = new DeletedEntryResponse();
+        deletedEntryResponse.setMessage("Todo with id " + todoId + " deleted");
+
+        return new ResponseEntity<>(deletedEntryResponse, HttpStatus.OK);
     }
 }
