@@ -25,7 +25,7 @@ Categories and Users as described by the [swagger file](src/main/resources/stati
 Once the application is running, swagger is accessible at path `/swagger-ui/index.html`
 ( Default should be `http://localhost:8080/swagger-ui/index.html` )
 
-The service was developer contract-first, meaning the swagger mentioned above is used for input model class generation,
+The service was developed contract-first, meaning the swagger mentioned above is used for input model class generation,
 forcing it that way to be up to date with exposed swagger.
 
 I followed the architecture : **Controller** - **Service** - **Repository** - **Database**
@@ -54,7 +54,7 @@ Report available [Sonarcloud](https://sonarcloud.io/project/overview?id=t-donnen
 - CSRF checks are Disabled
 - Can only create users with role USER ( no admins )
 - Update endpoints are using replace pattern, not json-patch
-- OK to allow too much information for user :  
+- Endpoints might deliver too much information to users 
 
 ### Issues encountered
 
@@ -62,6 +62,11 @@ Report available [Sonarcloud](https://sonarcloud.io/project/overview?id=t-donnen
 - Conflict of slf4j implementation : `org.openapitools:openapi-generator` transitively imported `slf4j.simple` which implements SLF4JServiceProvider and collided with default spring-boot-starter-logging SLF4JServiceProvider
 - Cascading of deletions ( remove todos categoryId FK when category is deleted )
 
+### Versions
+
+- 1.0.0: First draft of working and tested application
+
 ### Improvements TODO
 
 - De-couple basic auth from integration tests
+- Switch application authentication to OAuth
