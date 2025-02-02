@@ -41,6 +41,12 @@ provisioning scripts can be found in [test resources ](./src/test/resources/scri
 - **Linux** : `./gradle clean build`
 - Run the application with *local* spring profile : ``java -jar -Dspring.profiles.active=local build/libs/tobo-1.0.0-SNAPSHOT.jar``
 
+### CI/CD
+
+Pushes on main branch trigger a Github workflow which builds and test app and send sonarqube report and Jacoco repôrt to sonarcloud.
+
+Report available [Sonarcloud](https://sonarcloud.io/project/overview?id=t-donnenfeld_todo-app)
+
 ### Simplification choices
 
 - For the sake of simplicity users are authenticated with Basic Auth on this application.
