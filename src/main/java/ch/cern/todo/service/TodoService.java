@@ -3,14 +3,11 @@ package ch.cern.todo.service;
 import ch.cern.todo.error.ForbiddenException;
 import ch.cern.todo.error.ResourceNotFound;
 import ch.cern.todo.mapper.TodoMapper;
-import ch.cern.todo.model.CategoryModel;
 import ch.cern.todo.model.RoleEnum;
 import ch.cern.todo.model.TodoModel;
 import ch.cern.todo.model.UserModel;
-import ch.cern.todo.openapi.model.AddTodoRequest;
-import ch.cern.todo.openapi.model.SearchMyTodosRequest;
-import ch.cern.todo.openapi.model.SearchTodosRequest;
-import ch.cern.todo.openapi.model.Todo;
+import ch.cern.todo.openapi.model.*;
+import ch.cern.todo.repository.CategoryRepository;
 import ch.cern.todo.repository.TodoRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -27,6 +24,7 @@ public class TodoService {
     private final TodoMapper todoMapper;
     private final UserService userService;
     private final CategoryService categoryService;
+    private final CategoryRepository categoryRepository;
 
     public Todo findTodoById(Long id) {
         validateUserRights(id);
@@ -62,7 +60,7 @@ public class TodoService {
                         searchMyTodosRequest.getDeadlineBefore(),
                         searchMyTodosRequest.getCategoryIs(),
                         loggedUser.getUsername()
-                        )
+                )
                 .stream().map(todoMapper::map).toList();
     }
 
@@ -70,18 +68,12 @@ public class TodoService {
         TodoModel toSave = todoMapper.map(addTodoRequest, null);
         toSave.setUserId(userService.getAuthentifiedUser());
         if (addTodoRequest.getCategory() != null) {
-            toSave.setCategoryId(resolveOrCreateCategory(addTodoRequest.getCategory().getName()));
+            Category retrieved = categoryService.resolveOrCreateCategory(addTodoRequest.getCategory().getName());
+            toSave.setCategoryId(categoryRepository.findByName(retrieved.getName()));
         }
         return todoMapper.map(todoRepository.save(toSave));
     }
 
-    private CategoryModel resolveOrCreateCategory(String categoryName) {
-        CategoryModel categoryModel = categoryService.findByName(categoryName);
-        if (categoryModel == null) {
-            categoryModel = categoryService.addCategoryWithName(categoryName);
-        }
-        return categoryModel;
-    }
 
     public Todo updateTodo(Long id, AddTodoRequest addTodoRequest) {
         validateUserRights(id);
@@ -96,7 +88,8 @@ public class TodoService {
                 });
 
         if (addTodoRequest.getCategory() != null) {
-            toSave.setCategoryId(resolveOrCreateCategory(addTodoRequest.getCategory().getName()));
+            Category retrieved = categoryService.resolveOrCreateCategory(addTodoRequest.getCategory().getName());
+            toSave.setCategoryId(categoryRepository.findByName(retrieved.getName()));
         }
         return todoMapper.map(todoRepository.save(toSave));
     }

@@ -2,7 +2,6 @@ package ch.cern.todo.service;
 
 import ch.cern.todo.error.ResourceNotFound;
 import ch.cern.todo.mapper.CategoryMapper;
-import ch.cern.todo.model.CategoryModel;
 import ch.cern.todo.openapi.model.AddCategoryRequest;
 import ch.cern.todo.openapi.model.Category;
 import ch.cern.todo.repository.CategoryRepository;
@@ -10,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -18,33 +18,41 @@ public class CategoryService {
     private final CategoryRepository categoryRepository;
     private final CategoryMapper categoryMapper;
 
-    private Category findCategoryById(Long id) {
-        return categoryRepository.findById(id).map(categoryMapper::map).orElseThrow(() -> new ResourceNotFound("Category with id " + id + " not found"));
+    private Optional<Category> findCategoryById(Long id) {
+        return categoryRepository.findById(id).map(categoryMapper::map);
     }
 
     public List<Category> findAllCategories() {
         return categoryRepository.findAll().stream().map(categoryMapper::map).toList();
     }
 
-    public CategoryModel findByName(String name) {
-        return categoryRepository.findByName(name);
+    public Category findByName(String name) {
+        return categoryMapper.map(categoryRepository.findByName(name));
     }
 
     public Category addCategory(AddCategoryRequest addCategoryRequest) {
         return categoryMapper.map(categoryRepository.save(categoryMapper.map(addCategoryRequest)));
     }
 
-    public CategoryModel addCategoryWithName(String name) {
-        return categoryRepository.save(categoryMapper.map(name));
+    public Category addCategoryWithName(String name) {
+        return categoryMapper.map(categoryRepository.save(categoryMapper.map(name)));
+    }
+
+    public Category resolveOrCreateCategory(String categoryName) {
+        Category category = findByName(categoryName);
+        if (category == null) {
+            category = addCategoryWithName(categoryName);
+        }
+        return category;
     }
 
     public Category updateCategory(Long id, AddCategoryRequest addCategoryRequest) {
-        findCategoryById(id);
+        findCategoryById(id).orElseThrow(() -> new ResourceNotFound("Category with id " + id + " not found"));
         return categoryMapper.map(categoryRepository.save(categoryMapper.map(addCategoryRequest, id)));
     }
 
     public void deleteCategory(Long id) {
-        findCategoryById(id);
+        findCategoryById(id).orElseThrow(() -> new ResourceNotFound("Category with id " + id + " not found"));
         categoryRepository.deleteById(id);
     }
 
