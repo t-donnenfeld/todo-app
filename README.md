@@ -44,8 +44,13 @@ provisioning scripts can be found in [test resources ](./src/test/resources/scri
 ### CI/CD
 
 Pushes on main branch trigger a Github workflow which builds and test app and send sonarqube report and Jacoco repôrt to sonarcloud.
+A docker container is built and pushed to tdonnenfeld/todo-app on docker.io container registry.
+
 
 Report available [Sonarcloud](https://sonarcloud.io/project/overview?id=t-donnenfeld_todo-app)
+
+Application is deployed [here](https://todo.les12.fr/swagger-ui/index.html)
+
 
 ### Simplification choices
 
