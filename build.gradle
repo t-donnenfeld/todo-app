@@ -3,11 +3,21 @@ plugins {
 	id 'io.spring.dependency-management' version '1.1.7'
 	id "org.openapi.generator" version "7.11.0"
 	id 'java'
+	id "jacoco"
+	id "org.sonarqube" version "6.0.1.5171"
 }
 
 group = 'ch.cern'
 version = '1.0.0-SNAPSHOT'
 java.toolchain.languageVersion = JavaLanguageVersion.of(21)
+
+sonar {
+	properties {
+		property "sonar.projectKey", "t-donnenfeld_todo-app"
+		property "sonar.organization", "t-donnenfeld"
+		property "sonar.host.url", "https://sonarcloud.io"
+	}
+}
 
 openApiGenerate {
 	generatorName.set("spring")
@@ -22,6 +32,12 @@ openApiGenerate {
 	]
 	typeMappings.put("DateTime","LocalDateTime")
 	importMappings.put("LocalDateTime","java.time.LocalDateTime")
+}
+
+jacocoTestReport {
+	reports {
+		xml.required = true
+	}
 }
 
 compileJava.dependsOn "openApiGenerate"
