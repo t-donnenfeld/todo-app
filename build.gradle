@@ -8,7 +8,7 @@ plugins {
 }
 
 group = 'ch.cern'
-version = '1.0.1-SNAPSHOT'
+version = '1.0.1'
 java.toolchain.languageVersion = JavaLanguageVersion.of(21)
 
 sonar {

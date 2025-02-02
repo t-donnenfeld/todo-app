@@ -64,6 +64,7 @@ Report available [Sonarcloud](https://sonarcloud.io/project/overview?id=t-donnen
 
 ### Versions
 
+- 1.0.1: Minoir swagger fixes and added CI/CD
 - 1.0.0: First draft of working and tested application
 
 ### Improvements TODO
