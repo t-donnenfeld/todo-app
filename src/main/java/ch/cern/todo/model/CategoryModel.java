@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.List;
+
 @Entity
 @Table(name = "CATEGORIES")
 @Getter
@@ -14,6 +16,16 @@ public class CategoryModel {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Long id;
+
+    @OneToMany(mappedBy = "category")
+    private List<TodoModel> todos;
+
+    @PreRemove
+    private void preRemove() {
+        for (TodoModel t : todos) {
+            t.setCategory(null);
+        }
+    }
 
     @Column(unique = true, name = "category_name")
     private String name;

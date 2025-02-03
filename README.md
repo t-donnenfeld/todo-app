@@ -69,10 +69,11 @@ Application is deployed [here](https://todo.les12.fr/swagger-ui/index.html)
 
 ### Versions
 
-- 1.0.1: Minoir swagger fixes and added CI/CD
+- 1.0.1: Minor swagger fixes and added CI/CD
 - 1.0.0: First draft of working and tested application
 
 ### Improvements TODO
 
 - De-couple basic auth from integration tests
 - Switch application authentication to OAuth
+- Security on categories ? Any user can currently delete any category

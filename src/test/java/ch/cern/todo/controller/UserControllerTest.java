@@ -54,7 +54,7 @@ class UserControllerTest {
                         .contentType("application/json"))
                 .andExpect(status().isConflict())
                 .andExpect(jsonPath("$.message", is("User new_user already exists")))
-                .andExpect(jsonPath("$.code", is("USER_ALREADY_EXISTS")));
+                .andExpect(jsonPath("$.code", is("RESOURCE_ALREADY_EXISTS")));
     }
 
     private static CreateUserRequest getCreateUserRequest() {

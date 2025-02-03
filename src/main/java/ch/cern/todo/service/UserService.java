@@ -1,6 +1,6 @@
 package ch.cern.todo.service;
 
-import ch.cern.todo.error.UserAlreadyExistsException;
+import ch.cern.todo.error.ResourceAlreadyExistsException;
 import ch.cern.todo.mapper.UserMapper;
 import ch.cern.todo.model.UserModel;
 import ch.cern.todo.openapi.model.CreateUserRequest;
@@ -29,7 +29,7 @@ public class UserService {
 
     public User createUser(CreateUserRequest createUserRequest) {
         if (userRepository.findByUsername(createUserRequest.getUsername()) != null) {
-            throw new UserAlreadyExistsException("User " + createUserRequest.getUsername() + " already exists");
+            throw new ResourceAlreadyExistsException("User " + createUserRequest.getUsername() + " already exists");
         }
         UserModel createdUser = userRepository.save(userMapper.map(createUserRequest));
         return userMapper.map(createdUser);

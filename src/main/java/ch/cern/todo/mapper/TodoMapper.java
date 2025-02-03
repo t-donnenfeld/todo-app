@@ -9,10 +9,10 @@ import org.mapstruct.Mapping;
 @Mapper(componentModel = "spring")
 public interface TodoMapper {
 
-    @Mapping(target = "userId", ignore = true)
-    @Mapping(target = "categoryId.name", ignore = true)
-    @Mapping(target = "categoryId.id", ignore = true)
-    @Mapping(target = "categoryId.description", ignore = true)
+    @Mapping(target = "user", ignore = true)
+    @Mapping(target = "category.name", ignore = true)
+    @Mapping(target = "category.id", ignore = true)
+    @Mapping(target = "category.description", ignore = true)
     @Mapping(target = "id", source = "idOfTodoToUpdate")
     @Mapping(target = "name", source = "addTodoRequest.name")
     @Mapping(target = "description", source = "addTodoRequest.description")
@@ -20,8 +20,8 @@ public interface TodoMapper {
     TodoModel map(AddTodoRequest addTodoRequest, Long idOfTodoToUpdate);
 
 
-    @Mapping(target = "owner", source = "userId.username")
-    @Mapping(target = "category.name", source = "categoryId.name")
-    @Mapping(target = "category.id", source = "categoryId.id")
+    @Mapping(target = "owner", source = "user.username")
+    @Mapping(target = "category.name", source = "category.name")
+    @Mapping(target = "category.id", source = "category.id")
     Todo map(TodoModel todoModel);
 }

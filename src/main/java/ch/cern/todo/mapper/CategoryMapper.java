@@ -12,13 +12,16 @@ public interface CategoryMapper {
     @Mapping(target = "name", source = "category.name")
     @Mapping(target = "description", source = "category.description")
     @Mapping(target = "id", source = "id")
+    @Mapping(target = "todos", ignore = true)
     CategoryModel map(AddCategoryRequest category, Long id);
 
+    @Mapping(target = "todos", ignore = true)
     @Mapping(target = "id", ignore = true)
     CategoryModel map(AddCategoryRequest category);
 
     Category map(CategoryModel categoryModel);
 
+    @Mapping(target = "todos", ignore = true)
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "name", source = "name")
     @Mapping(target = "description", ignore = true)

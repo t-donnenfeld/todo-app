@@ -37,7 +37,7 @@ public class TodoService {
 
     public List<Todo> findAllTodosOfAuthenticatedUser() {
         UserModel loggedUser = userService.getAuthentifiedUser();
-        return todoRepository.findByUserId(loggedUser).stream().map(todoMapper::map).toList();
+        return todoRepository.findByUser(loggedUser).stream().map(todoMapper::map).toList();
     }
 
     public List<Todo> searchTodos(SearchTodosRequest searchTodosRequest) {
@@ -66,10 +66,10 @@ public class TodoService {
 
     public Todo addTodo(AddTodoRequest addTodoRequest) {
         TodoModel toSave = todoMapper.map(addTodoRequest, null);
-        toSave.setUserId(userService.getAuthentifiedUser());
+        toSave.setUser(userService.getAuthentifiedUser());
         if (addTodoRequest.getCategory() != null) {
             Category retrieved = categoryService.resolveOrCreateCategory(addTodoRequest.getCategory().getName());
-            toSave.setCategoryId(categoryRepository.findByName(retrieved.getName()));
+            toSave.setCategory(categoryRepository.findByName(retrieved.getName()));
         }
         return todoMapper.map(todoRepository.save(toSave));
     }
@@ -82,14 +82,14 @@ public class TodoService {
 
         Optional<TodoModel> todoModelOpt = todoRepository.findById(id);
         todoModelOpt.ifPresentOrElse(
-                todoModel -> toSave.setUserId(todoModel.getUserId()),
+                todoModel -> toSave.setUser(todoModel.getUser()),
                 () -> {
                     throw new ResourceNotFound("Could not find todo with id " + id);
                 });
 
         if (addTodoRequest.getCategory() != null) {
             Category retrieved = categoryService.resolveOrCreateCategory(addTodoRequest.getCategory().getName());
-            toSave.setCategoryId(categoryRepository.findByName(retrieved.getName()));
+            toSave.setCategory(categoryRepository.findByName(retrieved.getName()));
         }
         return todoMapper.map(todoRepository.save(toSave));
     }
@@ -114,7 +114,7 @@ public class TodoService {
         if (todoOpt.isEmpty()) {
             throw new ResourceNotFound("Could not find todo with id " + todoId);
         }
-        return Objects.equals(todoOpt.get().getUserId().getId(), loggedUser.getId());
+        return Objects.equals(todoOpt.get().getUser().getId(), loggedUser.getId());
     }
 
 }
