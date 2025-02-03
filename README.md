@@ -69,6 +69,7 @@ Application is deployed [here](https://todo.les12.fr/swagger-ui/index.html)
 
 ### Versions
 
+- 1.1.0: Major bug fix on delete category
 - 1.0.1: Minor swagger fixes and added CI/CD
 - 1.0.0: First draft of working and tested application
 
