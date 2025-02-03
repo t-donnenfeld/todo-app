@@ -78,3 +78,13 @@ Application is deployed [here](https://todo.les12.fr/swagger-ui/index.html)
 - De-couple basic auth from integration tests
 - Switch application authentication to OAuth
 - Security on categories ? Any user can currently delete any category
+
+### Personal thoughts
+
+I thought the exercise was enjoyable as it is simple but yet forces you to demonstrate global understanding,
+project is small enough for you to take time to code not too much in a hurry and it is also nice to work on every layer starting from a greenfield project.
+I also had a bit of fun deploying it :)
+
+
+.
+I hope this project suits your expectations !

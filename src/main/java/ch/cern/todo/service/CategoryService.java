@@ -32,16 +32,16 @@ public class CategoryService {
     }
 
     public Category addCategory(AddCategoryRequest addCategoryRequest) {
-        checkCategoryExists(addCategoryRequest.getName());
+        checkCategoryExistsOrThrow(addCategoryRequest.getName());
         return categoryMapper.map(categoryRepository.save(categoryMapper.map(addCategoryRequest)));
     }
 
     public Category addCategoryWithName(String name) {
-        checkCategoryExists(name);
+        checkCategoryExistsOrThrow(name);
         return categoryMapper.map(categoryRepository.save(categoryMapper.map(name)));
     }
 
-    private void checkCategoryExists(String name) {
+    private void checkCategoryExistsOrThrow(String name) {
         if (categoryRepository.findByName(name) != null) {
             throw new ResourceAlreadyExistsException("Category " + name + " already exists");
         }
