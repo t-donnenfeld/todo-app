@@ -28,10 +28,10 @@ public class TodoModel {
 
     @ManyToOne
     @JoinColumn(name = "category_id")
-    private CategoryModel categoryId;
+    private CategoryModel category;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
-    private UserModel userId;
+    private UserModel user;
 
 }

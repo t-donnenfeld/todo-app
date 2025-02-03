@@ -1,6 +1,7 @@
 package ch.cern.todo.service;
 
 import ch.cern.todo.error.ResourceNotFound;
+import ch.cern.todo.error.ResourceAlreadyExistsException;
 import ch.cern.todo.mapper.CategoryMapper;
 import ch.cern.todo.openapi.model.AddCategoryRequest;
 import ch.cern.todo.openapi.model.Category;
@@ -31,11 +32,19 @@ public class CategoryService {
     }
 
     public Category addCategory(AddCategoryRequest addCategoryRequest) {
+        checkCategoryExists(addCategoryRequest.getName());
         return categoryMapper.map(categoryRepository.save(categoryMapper.map(addCategoryRequest)));
     }
 
     public Category addCategoryWithName(String name) {
+        checkCategoryExists(name);
         return categoryMapper.map(categoryRepository.save(categoryMapper.map(name)));
+    }
+
+    private void checkCategoryExists(String name) {
+        if (categoryRepository.findByName(name) != null) {
+            throw new ResourceAlreadyExistsException("Category " + name + " already exists");
+        }
     }
 
     public Category resolveOrCreateCategory(String categoryName) {

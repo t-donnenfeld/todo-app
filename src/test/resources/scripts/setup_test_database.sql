@@ -1,7 +1,7 @@
 CREATE TABLE IF NOT EXISTS categories
 (
     id INT NOT NULL AUTO_INCREMENT,
-    category_name VARCHAR(100) NOT NULL,
+    category_name VARCHAR(100) NOT NULL UNIQUE,
     category_description VARCHAR(500),
     PRIMARY KEY(id)
 );
@@ -9,7 +9,7 @@ CREATE TABLE IF NOT EXISTS categories
 CREATE TABLE IF NOT EXISTS users
 (
     id INT NOT NULL AUTO_INCREMENT,
-    user_username VARCHAR(100) NOT NULL,
+    user_username VARCHAR(100) NOT NULL UNIQUE,
     user_password VARCHAR(100) NOT NULL,
     user_role VARCHAR(10) NOT NULL,
     PRIMARY KEY(id)

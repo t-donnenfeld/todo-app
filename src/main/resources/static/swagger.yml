@@ -547,7 +547,7 @@ components:
             - "RESOURCE_NOT_FOUND_ERROR"
             - "VALIDATION_ERROR"
             - "INVALID_USER_OR_PASSWORD"
-            - "USER_ALREADY_EXISTS"
+            - "RESOURCE_ALREADY_EXISTS"
             - "RESOURCE_NOT_FOUND"
             - "AUTHORIZATION_DENIED"
   requestBodies:
