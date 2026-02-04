@@ -1,4 +1,4 @@
-name: Build and deploy JAR app to Azure Web App
+name: Build and deploy Gradle JAR app to Azure Web App
 
 env:
   AZURE_WEBAPP_NAME: helloworld
@@ -21,16 +21,19 @@ jobs:
         with:
           distribution: 'temurin'
           java-version: ${{ env.JAVA_VERSION }}
-          cache: 'maven'
+          cache: 'gradle'
 
-      - name: Build with Maven
-        run: mvn clean package -DskipTests
+      - name: Grant execute permission for Gradle wrapper
+        run: chmod +x ./gradlew
+
+      - name: Build with Gradle
+        run: ./gradlew build -x test
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
           name: java-app
-          path: target/*.jar
+          path: build/libs/*.jar
 
   deploy:
     runs-on: ubuntu-latest
